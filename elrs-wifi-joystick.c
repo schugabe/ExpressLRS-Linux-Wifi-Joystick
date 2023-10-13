@@ -86,7 +86,7 @@ static int send_mdns_query() {
     mdns_query_t query[1];
     size_t count = 1;
 
-    query[0].name = "_elrs-joystick._udp.local";
+    query[0].name = "_elrs._udp.local";
     query[0].length = strlen(query[0].name);
 
     int socket = mdns_socket_open_ipv4(NULL);
