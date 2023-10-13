@@ -234,14 +234,15 @@ int start_joystick() {
     char url_buffer[256];
     uint8_t success = EXIT_FAILURE;
 
-    sprintf(url_buffer, "http://%s/wifi_joystick?start=1&updateInterval=10000&channels=8", joystick_ip);
+    sprintf(url_buffer, "http://%s/udpcontrol", joystick_ip);
     printf("\nrequest joystick %s\n", url_buffer);
-    CURLcode curl_code = curl_easy_setopt(curl, CURLOPT_URL, url_buffer);
+    curl_easy_setopt(curl, CURLOPT_URL, url_buffer);
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "action=joystick_begin&interval=10000&channels=8");
     curl_easy_perform(curl);
 
     long http_code = 0;
-    curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &http_code);
-    if (http_code == 200 && curl_code != CURLE_ABORTED_BY_CALLBACK) {
+    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
+    if (http_code == 200) {
         success = EXIT_SUCCESS;
     } else {
         printf("status code %ld\n", http_code);
