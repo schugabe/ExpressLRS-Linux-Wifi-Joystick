@@ -224,7 +224,6 @@ void receive_data() {
         uint8_t offset = 2;
         for (int i = 0; i < 8; i++) {
             channel_ptr[i] = *(uint16_t *) (buffer + offset);
-            channel_ptr[i] /= 2;
             offset += 2;
         }
     }
